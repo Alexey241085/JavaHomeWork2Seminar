@@ -1,15 +1,11 @@
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.util.Arrays;
-import java.util.List;
 import java.io.BufferedReader;
 
 public class Task2 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
         StringBuilder sb = new StringBuilder();
         File file = new File("task.txt");
         String[] finish;

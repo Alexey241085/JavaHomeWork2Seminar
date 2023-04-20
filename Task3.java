@@ -1,77 +1,58 @@
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.Scanner;
+import java.util.logging.*;
+import java.io.IOException;
 
-// Реализовать простой калькулятор (+ - / *)
-// Ввод числа ->
-// Ввод знака ->
-// Ввод числа ->
 
 public class Task3 {
-    
-    public static void main(String[] args) {
-        
-        StringBuilder sb = new StringBuilder();
-        char symbol;
-        Scanner in = new Scanner(System.in);
-        System.out.print("Введите первое число: ");
-        double num1 = in.nextDouble();
+    public static void main(String[] args) throws IOException {
+        Logger logger = Logger.getLogger(Task3.class.getName());
+        Scanner sc = new Scanner(System.in);
 
-        System.out.print("Введите второе число: ");
-        double num2 = in.nextDouble();
+        String logsPath = "calc.txt";
 
-        System.out.print("Введите знак '*', '/' , '+', '-': ");
-        symbol = in.next().charAt(0);
-        System.out.println(symbol);
-        double result =0;
-       
+        FileHandler fh = new FileHandler(logsPath);
+        logger.addHandler(fh);
 
-        switch (symbol) {
-            case '+': result = num1 + num2;
-                break;
-            case '-': result = num1 - num2;
-                break;
-            case '*': result = num1 * num2;
-                break;
-            case '/': result = num1 / num2;
-                break;
-        
-            default: 
-                break;
-        }
-            System.out.println(result);
+        SimpleFormatter formatter = new SimpleFormatter();
+        fh.setFormatter(formatter);
 
-            sb.append(num1).
-            append(" ").
-            append(symbol).
-            append(" ").
-            append(num2).
-            append(" ").
-            append("=").
-            append(" ").
-            append(result);
+        while (true) {
+            System.out.print("Введите первое число: ");
+            double number1 = Double.parseDouble(sc.nextLine());
+            
+            System.out.print("Введите второе число: ");
+            double number2 = Double.parseDouble(sc.nextLine());
 
-            System.out.println(sb);
+            System.out.print("Введите действие: ");
+            String action = sc.nextLine();
 
+            if (action.equals("")) break;
 
-            try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter("calc.txt"));
-                writer.append(sb);
-                writer.close();
+            String sol = number1 + " " + action + " " + number2 + " = ";
+            double res = 0;
 
-                
-            } catch (Exception e) {
-                System.out.println("ОШИБКА");
+            switch (action) {
+                case "+":
+                    res = number1 + number2;
+                    logger.info(sol + res);
+                    break;
+                case "-":
+                    res = number1 - number2;
+                    logger.info(sol + res);
+                    break;
+                case "*":
+                    res = number1 * number2;
+                    logger.info(sol + res);
+                    break;
+                case "/":
+                    res = number1 / number2;
+                    logger.info(sol + res);
+                    break;
+                default:
+                    System.out.println("Некорректное действие!");
+            }
         }
 
+        sc.close();
     }
-      
 }
-    
-
-
-    
-
-
-        
